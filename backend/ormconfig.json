@@ -5,15 +5,14 @@
   "username": "postgres",
   "password": "docker",
   "database": "gofoot",
-  "synchronize": true,
   "logging": false,
   "entities": [
-     "src/entity/**/*.ts"
+     "src/app/models/*.ts"
   ],
   "migrations": [
-     "src/migration/**/*.ts"
+     "src/database/migrations/*.ts"
   ],
-  "subscribers": [
-     "src/subscriber/**/*.ts"
-  ]
+  "cli": {
+    "migrationsDir": "src/database/migrations"
+  }
 }
