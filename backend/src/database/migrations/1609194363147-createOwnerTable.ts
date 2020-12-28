@@ -9,7 +9,7 @@ export default class createOwnerTable1609194363147
         columns: [
           {
             name: "idOwner",
-            type: "varchar",
+            type: "uuid",
             isPrimary: true,
             generationStrategy: "uuid",
           },
