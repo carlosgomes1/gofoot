@@ -1,3 +1,5 @@
 import { createConnection } from "typeorm";
 
-createConnection();
+createConnection().then(() =>
+  console.log("Conectado ao Docker/Postgres com sucesso!"),
+);
