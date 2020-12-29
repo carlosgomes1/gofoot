@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev --ignore-watch node_modules ./src/server.ts",
+    "dev:server": "ts-node-dev --ignore-watch node_modules --files ./src/server.ts",
     "typeorm": "npx ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29",
