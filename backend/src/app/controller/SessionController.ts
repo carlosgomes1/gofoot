@@ -19,38 +19,43 @@ class SessionController {
         .required("Password is required."),
     });
 
-    await schema.validate(request.body).catch(error => {
-      return response.status(400).json({ error: error.message });
-    });
+    await schema
+      .validate(request.body)
+      .then(async () => {
+        const repository = getRepository(Owner);
 
-    const repository = getRepository(Owner);
+        const { email, password } = request.body;
 
-    const { email, password } = request.body;
+        const owner = await repository.findOne({
+          where: {
+            email,
+          },
+        });
 
-    const owner = await repository.findOne({
-      where: {
-        email,
-      },
-    });
+        if (!owner) {
+          return response.status(401).json({ error: "Owner not found" });
+        }
 
-    if (!owner) {
-      return response.status(401).json({ error: "Owner not found" });
-    }
+        const passwordMatch = await compareHash(password, owner.password_hash);
 
-    const passwordMatch = await compareHash(password, owner.password_hash);
+        if (!passwordMatch) {
+          return response
+            .status(400)
+            .json({ error: "Password does not match" });
+        }
 
-    if (!passwordMatch) {
-      return response.status(400).json({ error: "Password does not match" });
-    }
+        delete owner.password_hash;
 
-    delete owner.password_hash;
-
-    return response.json({
-      owner,
-      token: jwt.sign({ id: owner.idOwner }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-    });
+        return response.json({
+          owner,
+          token: jwt.sign({ id: owner.idOwner }, authConfig.secret, {
+            expiresIn: authConfig.expiresIn,
+          }),
+        });
+      })
+      .catch(error => {
+        return response.status(400).json({ error: error.message });
+      });
   }
 }
 
