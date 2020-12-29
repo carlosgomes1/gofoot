@@ -18,6 +18,7 @@ routes.use(authMiddleware);
 
 routes.delete("/owner", OwnerController.destroy);
 
-routes.post("/field", FieldController.create);
+routes.post("/field", FieldController.store);
+routes.put("/field/:id", FieldController.update);
 
 export default routes;

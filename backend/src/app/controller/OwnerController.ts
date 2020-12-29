@@ -19,7 +19,7 @@ class OwnerController {
     } catch (err) {
       return response
         .status(404)
-        .json({ message: "This owner does not exists." });
+        .json({ error: "This owner does not exists." });
     }
   }
 
