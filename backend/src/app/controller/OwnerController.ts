@@ -9,6 +9,12 @@ class OwnerController {
 
     const { email, password, whatsapp, uf, city } = request.body;
 
+    const ownerExists = await repository.findOne({ where: { email } });
+
+    if (ownerExists) {
+      return response.status(400).json({ error: "Owner already exists." });
+    }
+
     const owner = repository.create({
       email,
       password_hash: password,
