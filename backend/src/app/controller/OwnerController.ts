@@ -13,7 +13,7 @@ class OwnerController {
     const { id: idOwner } = request.params;
 
     try {
-      const owner = await repository.find({ where: { idOwner } });
+      const owner = await repository.findOne({ where: { idOwner } });
 
       return response.json(owner);
     } catch (err) {
@@ -47,37 +47,40 @@ class OwnerController {
       city: Yup.string().required("City is required."),
     });
 
-    await schema.validate(request.body).catch(error => {
-      return response.status(400).json({ error: error.message });
-    });
+    await schema
+      .validate(request.body)
+      .then(async () => {
+        const repository = getRepository(Owner);
 
-    const repository = getRepository(Owner);
+        const { email, password, whatsapp, uf, city } = request.body;
 
-    const { email, password, whatsapp, uf, city } = request.body;
+        const ownerExists = await repository.findOne({ where: { email } });
 
-    const ownerExists = await repository.findOne({ where: { email } });
+        if (ownerExists) {
+          return response.status(400).json({ error: "Owner already exists." });
+        }
 
-    if (ownerExists) {
-      return response.status(400).json({ error: "Owner already exists." });
-    }
+        const password_hash = await hashPassword(password);
 
-    const password_hash = await hashPassword(password);
+        if (!password_hash) {
+          return response.status(500).json({ error: "Error on hash password" });
+        }
 
-    if (!password_hash) {
-      return response.status(500).json({ error: "Error on hash password" });
-    }
+        const owner = repository.create({
+          email,
+          password_hash,
+          whatsapp,
+          uf,
+          city,
+        });
 
-    const owner = repository.create({
-      email,
-      password_hash,
-      whatsapp,
-      uf,
-      city,
-    });
+        await repository.save(owner);
 
-    await repository.save(owner);
-
-    return response.json({ message: "Owner created successfully", owner });
+        return response.json({ message: "Owner created successfully", owner });
+      })
+      .catch(error => {
+        return response.status(400).json({ error: error.message });
+      });
   }
 
   async destroy(request: Request, response: Response) {
