@@ -52,6 +52,14 @@ class OwnerController {
 
     return response.json({ message: "Owner created successfully", owner });
   }
+
+  async destroy(request: Request, response: Response) {
+    const repository = getRepository(Owner);
+
+    await repository.delete({ idOwner: request.idOwner });
+
+    return response.json({ message: "The owner was successfully excluded." });
+  }
 }
 
 export default new OwnerController();

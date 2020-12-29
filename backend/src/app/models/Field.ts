@@ -38,3 +38,5 @@ class Field {
   @JoinColumn({ name: "fkOwner" })
   owner: Owner;
 }
+
+export default Field;
