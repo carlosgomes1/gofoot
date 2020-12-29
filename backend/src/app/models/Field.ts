@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { uuid } from "uuidv4";
 
 import Owner from "./Owner";
 
@@ -20,7 +21,7 @@ class Field {
   logradouro: string;
 
   @Column("int")
-  number: number;
+  number: string;
 
   @Column()
   complement: string;
@@ -37,6 +38,10 @@ class Field {
   @ManyToOne(() => Owner)
   @JoinColumn({ name: "fkOwner" })
   owner: Owner;
+
+  constructor() {
+    this.idField = uuid();
+  }
 }
 
 export default Field;

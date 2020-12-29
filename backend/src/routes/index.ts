@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import OwnerController from "../app/controller/OwnerController";
 import SessionController from "../app/controller/SessionController";
+import FieldController from "../app/controller/FieldController";
 
 import authMiddleware from "../middlewares/auth";
 
@@ -16,5 +17,7 @@ routes.post("/session", SessionController.store);
 routes.use(authMiddleware);
 
 routes.delete("/owner", OwnerController.destroy);
+
+routes.post("/field", FieldController.create);
 
 export default routes;

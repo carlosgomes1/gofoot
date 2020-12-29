@@ -40,12 +40,12 @@ export default class createFieldTable1609225348858
           },
           {
             name: "latitude",
-            type: "int",
+            type: "float",
             isNullable: false,
           },
           {
             name: "longitude",
-            type: "int",
+            type: "float",
             isNullable: false,
           },
           {
