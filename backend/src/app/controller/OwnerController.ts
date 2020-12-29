@@ -7,6 +7,17 @@ import { hashPassword } from "../../utils/hash";
 import Owner from "../models/Owner";
 
 class OwnerController {
+  async index(request: Request, response: Response) {
+    const repository = getRepository(Owner);
+
+    const owners = await repository.findAndCount();
+    console.log(`${owners[1]} owners were found.`);
+
+    owners[0].map(owner => delete owner.password_hash);
+
+    response.json(owners);
+  }
+
   async store(request: Request, response: Response) {
     const schema = Yup.object().shape({
       email: Yup.string()
