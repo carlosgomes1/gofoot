@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
+import * as Yup from "yup";
 
 import { hashPassword } from "../../utils/hash";
 
@@ -7,6 +8,22 @@ import Owner from "../models/Owner";
 
 class OwnerController {
   async store(request: Request, response: Response) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email("E-mail not valid.")
+        .required("E-mail is required."),
+      password: Yup.string()
+        .min(6, "Password must have at least 6 character")
+        .required("Password is required."),
+      whatsapp: Yup.string().required("WhatsApp is required."),
+      uf: Yup.string().min(2).max(2).required("UF is required."),
+      city: Yup.string().required("City is required."),
+    });
+
+    await schema.validate(request.body).catch(error => {
+      return response.status(400).json({ error: error.message });
+    });
+
     const repository = getRepository(Owner);
 
     const { email, password, whatsapp, uf, city } = request.body;
