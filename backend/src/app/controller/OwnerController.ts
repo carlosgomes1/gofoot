@@ -7,6 +7,22 @@ import { hashPassword } from "../../utils/hash";
 import Owner from "../models/Owner";
 
 class OwnerController {
+  async show(request: Request, response: Response) {
+    const repository = getRepository(Owner);
+
+    const { id: idOwner } = request.params;
+
+    try {
+      const owner = await repository.find({ where: { idOwner } });
+
+      return response.json(owner);
+    } catch (err) {
+      return response
+        .status(404)
+        .json({ message: "This owner does not exists." });
+    }
+  }
+
   async index(request: Request, response: Response) {
     const repository = getRepository(Owner);
 

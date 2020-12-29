@@ -9,6 +9,7 @@ const routes = Router();
 
 routes.post("/owner", OwnerController.store);
 routes.get("/owner", OwnerController.index);
+routes.get("/owner/:id", OwnerController.show);
 
 routes.post("/session", SessionController.store);
 
