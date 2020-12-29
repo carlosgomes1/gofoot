@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 
+import { hashPassword } from "../../utils/hash";
+
 import Owner from "../models/Owner";
 
 class OwnerController {
@@ -15,9 +17,15 @@ class OwnerController {
       return response.status(400).json({ error: "Owner already exists." });
     }
 
+    const password_hash = await hashPassword(password);
+
+    if (!password_hash) {
+      return response.status(500).json({ error: "Error on hash password" });
+    }
+
     const owner = repository.create({
       email,
-      password_hash: password,
+      password_hash,
       whatsapp,
       uf,
       city,
@@ -25,7 +33,7 @@ class OwnerController {
 
     await repository.save(owner);
 
-    return response.json({ message: "Owner created successfully" });
+    return response.json({ message: "Owner created successfully", owner });
   }
 }
 
