@@ -1,10 +1,10 @@
 {
   "type": "postgres",
-  "host": "localhost",
+  "host": "YOUR_HOST_POSTGRES",
   "port": 5432,
-  "username": "postgres",
-  "password": "docker",
-  "database": "gofoot",
+  "username": "YOUR_USERNAME_DATABASE",
+  "password": "YOUR_PASSWORD_DATABASE",
+  "database": "YOUR_DATABASE_NAME",
   "logging": false,
   "entities": [
      "src/app/models/*.ts"
@@ -14,6 +14,5 @@
   ],
   "cli": {
     "migrationsDir": "src/database/migrations"
-
   }
 }
