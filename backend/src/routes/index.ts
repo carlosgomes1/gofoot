@@ -23,5 +23,6 @@ routes.delete("/owner", OwnerController.destroy);
 
 routes.post("/field", FieldController.store);
 routes.put("/field/:id", FieldController.update);
+routes.delete("/field/:id", FieldController.destroy);
 
 export default routes;

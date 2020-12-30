@@ -5,6 +5,17 @@ import * as Yup from "yup";
 import Field from "../models/Field";
 
 class FieldController {
+  async destroy(request: Request, response: Response) {
+    const repository = getRepository(Field);
+
+    await repository.delete({
+      idField: request.params.id,
+      fkOwner: request.idOwner,
+    });
+
+    return response.json({ message: "The field was successfully excluded." });
+  }
+
   async show(request: Request, response: Response) {
     const repository = getRepository(Field);
 
