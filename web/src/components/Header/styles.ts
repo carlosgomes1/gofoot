@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   height: 10vh;
@@ -17,7 +18,15 @@ export const HeaderDiv = styled.header`
 export const Content = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
   width: 80%;
+
+  img {
+    margin-top: 24px;
+
+    width: 200px;
+  }
 `;
 
 export const Navbar = styled.nav`
@@ -28,10 +37,18 @@ export const Navbar = styled.nav`
   align-items: center;
 `;
 
-export const NavItem = styled.h1`
+export const NavItem = styled(Link)`
   font-size: 2rem;
 
   color: #eaeaea;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #034c26;
+  }
 `;
 
 export const Divisor = styled.div`

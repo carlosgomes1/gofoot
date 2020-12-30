@@ -1,16 +1,18 @@
 import React from "react";
 
+import Logo from "../../assets/images/logo.png";
+
 import { Container, Content, Navbar, NavItem, Divisor } from "./styles";
 
 const Header: React.FC = () => {
   return (
     <Container>
       <Content>
-        <h1>Hello, World!</h1>
+        <img src={Logo} alt="Logo" />
         <Navbar>
-          <NavItem>Login</NavItem>
+          <NavItem to="/">Login</NavItem>
           <Divisor />
-          <NavItem>Cadastre-se</NavItem>
+          <NavItem to="/register">Cadastre-se</NavItem>
         </Navbar>
       </Content>
     </Container>

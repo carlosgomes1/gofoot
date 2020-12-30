@@ -10,6 +10,7 @@ export const Container = styled.div`
   align-items: center;
 
   background: url(${WaveSVG}) no-repeat;
+  background-position-y: -16px;
 `;
 
 export const Content = styled.div`
