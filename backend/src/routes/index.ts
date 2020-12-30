@@ -4,6 +4,7 @@ import OwnerController from "../app/controller/OwnerController";
 import SessionController from "../app/controller/SessionController";
 import FieldController from "../app/controller/FieldController";
 import ResponsibleController from "../app/controller/ResponsibleController";
+import ContactController from "../app/controller/ContactController";
 
 import authMiddleware from "../middlewares/auth";
 
@@ -18,6 +19,8 @@ routes.get("/field/:id", FieldController.show);
 
 routes.get("/responsible/:id", ResponsibleController.index);
 
+routes.get("/contact/:id", ContactController.index);
+
 routes.post("/session", SessionController.store);
 
 routes.use(authMiddleware);
@@ -30,5 +33,7 @@ routes.delete("/field/:id", FieldController.destroy);
 
 routes.post("/responsible/:id", ResponsibleController.store);
 routes.delete("/responsible/:id", ResponsibleController.destroy);
+
+routes.post("/contact/:id", ContactController.store);
 
 export default routes;
