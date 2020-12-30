@@ -1,8 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { FiMail, FiLock } from "react-icons/fi";
 import { FaWhatsapp, FaBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import { Form } from "@unform/web";
+import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
+
+import getValidationErrors from "../../utils/getValidationErrors";
 
 import { Container, Content } from "./styles";
 
@@ -12,9 +15,13 @@ import Header from "../../components/Header";
 import Input from "../../components/Input";
 
 const Register: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const handleSubmit = useCallback(
     async (data: string | unknown): Promise<void> => {
       try {
+        formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           email: Yup.string()
             .email("Este e-mail não é válido.")
@@ -32,7 +39,9 @@ const Register: React.FC = () => {
           abortEarly: false,
         });
       } catch (err) {
-        console.log(err);
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
       }
     },
     [],
@@ -45,7 +54,7 @@ const Register: React.FC = () => {
         <img src={JogadorSVG} alt="Jogador de futebol" />
         <div>
           <h1>Registre-se aqui!</h1>
-          <Form onSubmit={handleSubmit}>
+          <Form ref={formRef} onSubmit={handleSubmit}>
             <Input
               type="email"
               placeholder="E-mail"
