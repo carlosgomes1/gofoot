@@ -40,6 +40,7 @@ export default class createResponsibleTable1609293888088
         referencedColumnNames: ["idField"],
         referencedTableName: "fields",
         onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       }),
     );
   }

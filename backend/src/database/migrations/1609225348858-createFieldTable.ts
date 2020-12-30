@@ -65,6 +65,7 @@ export default class createFieldTable1609225348858
         referencedColumnNames: ["idOwner"],
         referencedTableName: "owners",
         onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       }),
     );
   }
