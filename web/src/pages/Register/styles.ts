@@ -24,6 +24,8 @@ export const Content = styled.div`
       margin-top: auto;
       font-size: 3.6rem;
 
+      text-align: center;
+
       color: #034c26;
 
       margin-bottom: 8px;

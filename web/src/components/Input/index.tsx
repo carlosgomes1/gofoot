@@ -16,7 +16,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({ icon: Icon, name, ...rest }) => {
+const Input: React.FC<InputProps> = ({ icon: Icon, name = "", ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({ icon: Icon, name, ...rest }) => {
         {...rest}
       />
       {error && (
-        <Error>
+        <Error title={error}>
           <FiAlertCircle size={20} color="#c53030" />
         </Error>
       )}
