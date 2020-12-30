@@ -14,7 +14,7 @@ export default class createFieldTable1609225348858
         columns: [
           {
             name: "idField",
-            type: "varchar",
+            type: "uuid",
             isPrimary: true,
             generationStrategy: "uuid",
           },
