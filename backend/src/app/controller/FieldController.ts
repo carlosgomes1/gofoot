@@ -5,6 +5,31 @@ import * as Yup from "yup";
 import Field from "../models/Field";
 
 class FieldController {
+  async show(request: Request, response: Response) {
+    const repository = getRepository(Field);
+
+    const { id: idField } = request.params;
+
+    try {
+      const field = await repository.findOne({ where: { idField } });
+
+      return response.json(field);
+    } catch (err) {
+      return response
+        .status(404)
+        .json({ error: "This field does not exists." });
+    }
+  }
+
+  async index(request: Request, response: Response) {
+    const repository = getRepository(Field);
+
+    const fields = await repository.findAndCount();
+    console.log(`${fields[1]} fields were found.`);
+
+    return response.json(fields);
+  }
+
   async update(request: Request, response: Response) {
     const schema = Yup.object().shape({
       name: Yup.string().required("Name is required."),

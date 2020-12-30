@@ -12,6 +12,9 @@ routes.post("/owner", OwnerController.store);
 routes.get("/owner", OwnerController.index);
 routes.get("/owner/:id", OwnerController.show);
 
+routes.get("/field", FieldController.index);
+routes.get("/field/:id", FieldController.show);
+
 routes.post("/session", SessionController.store);
 
 routes.use(authMiddleware);
