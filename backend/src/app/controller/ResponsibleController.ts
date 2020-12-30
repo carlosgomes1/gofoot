@@ -22,6 +22,7 @@ class ResponsibleController {
 
     const responsibles = await repository.findAndCount({
       where: { fkField: request.params.id },
+      relations: ["contacts"],
     });
 
     console.log(`${responsibles[1]} responsibles were found.`);

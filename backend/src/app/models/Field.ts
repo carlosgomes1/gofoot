@@ -4,10 +4,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { uuid } from "uuidv4";
 
 import Owner from "./Owner";
+import Responsible from "./Responsible";
 
 @Entity("fields")
 class Field {
@@ -38,6 +40,9 @@ class Field {
   @ManyToOne(() => Owner)
   @JoinColumn({ name: "fkOwner" })
   owner: Owner;
+
+  @OneToMany(() => Responsible, responsible => responsible.field)
+  responsibles: Responsible[];
 
   constructor() {
     this.idField = uuid();

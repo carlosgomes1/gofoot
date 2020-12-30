@@ -1,5 +1,7 @@
 import { uuid } from "uuidv4";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+
+import Field from "./Field";
 
 @Entity("owners")
 class Owner {
@@ -20,6 +22,9 @@ class Owner {
 
   @Column()
   city: string;
+
+  @OneToMany(() => Field, field => field.owner)
+  fields: Field[];
 
   constructor() {
     this.idOwner = uuid();

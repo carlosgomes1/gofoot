@@ -22,7 +22,10 @@ class FieldController {
     const { id: idField } = request.params;
 
     try {
-      const field = await repository.findOne({ where: { idField } });
+      const field = await repository.findOne({
+        where: { idField },
+        relations: ["responsibles"],
+      });
 
       return response.json(field);
     } catch (err) {

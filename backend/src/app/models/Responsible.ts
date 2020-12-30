@@ -4,10 +4,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { uuid } from "uuidv4";
 
 import Field from "./Field";
+import Contact from "./Contact";
 
 @Entity("responsibles")
 class Responsible {
@@ -23,6 +25,9 @@ class Responsible {
   @ManyToOne(() => Field)
   @JoinColumn({ name: "fkField" })
   field: Field;
+
+  @OneToMany(() => Contact, contact => contact.responsible)
+  contacts: Contact[];
 
   constructor() {
     this.idResponsible = uuid();
