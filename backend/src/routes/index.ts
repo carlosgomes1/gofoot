@@ -16,6 +16,8 @@ routes.get("/owner/:id", OwnerController.show);
 routes.get("/field", FieldController.index);
 routes.get("/field/:id", FieldController.show);
 
+routes.get("/responsible/:id", ResponsibleController.index);
+
 routes.post("/session", SessionController.store);
 
 routes.use(authMiddleware);
@@ -27,5 +29,6 @@ routes.put("/field/:id", FieldController.update);
 routes.delete("/field/:id", FieldController.destroy);
 
 routes.post("/responsible/:id", ResponsibleController.store);
+routes.delete("/responsible/:id", ResponsibleController.destroy);
 
 export default routes;

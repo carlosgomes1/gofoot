@@ -5,6 +5,30 @@ import * as Yup from "yup";
 import Responsible from "../models/Responsible";
 
 class ResponsibleController {
+  async destroy(request: Request, response: Response) {
+    const repository = getRepository(Responsible);
+
+    await repository.delete({
+      idResponsible: request.params.id,
+    });
+
+    return response.json({
+      message: "The responsible was successfully excluded.",
+    });
+  }
+
+  async index(request: Request, response: Response) {
+    const repository = getRepository(Responsible);
+
+    const responsibles = await repository.findAndCount({
+      where: { fkField: request.params.id },
+    });
+
+    console.log(`${responsibles[1]} responsibles were found.`);
+
+    return response.json(responsibles);
+  }
+
   async store(request: Request, response: Response) {
     const schema = Yup.object().shape({
       name: Yup.string().required("Name is required."),
