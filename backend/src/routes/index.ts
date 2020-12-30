@@ -3,6 +3,7 @@ import { Router } from "express";
 import OwnerController from "../app/controller/OwnerController";
 import SessionController from "../app/controller/SessionController";
 import FieldController from "../app/controller/FieldController";
+import ResponsibleController from "../app/controller/ResponsibleController";
 
 import authMiddleware from "../middlewares/auth";
 
@@ -24,5 +25,7 @@ routes.delete("/owner", OwnerController.destroy);
 routes.post("/field", FieldController.store);
 routes.put("/field/:id", FieldController.update);
 routes.delete("/field/:id", FieldController.destroy);
+
+routes.post("/responsible/:id", ResponsibleController.store);
 
 export default routes;
