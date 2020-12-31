@@ -16,7 +16,7 @@ const Options: React.FC<OptionsProps> = ({ selected }) => {
           <FaFutbol size={56} />
           <span>Meus campos</span>
         </OptionsItem>
-        <OptionsItem selected={selected === "new"} to="/">
+        <OptionsItem selected={selected === "new"} to="/new">
           <FiPlus size={56} />
           <span>Novo campo</span>
         </OptionsItem>

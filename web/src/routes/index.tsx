@@ -8,6 +8,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 
 import Owner from "../pages/Owner";
+import New from "../pages/New";
 
 import NotFound from "../pages/NotFound";
 
@@ -17,6 +18,7 @@ const Routes: React.FC = () => (
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/owner" isPrivate component={Owner} />
+    <Route path="/new" isPrivate component={New} />
     <Route path="/" component={NotFound} />
   </Switch>
 );
