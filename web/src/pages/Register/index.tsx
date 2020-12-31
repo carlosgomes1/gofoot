@@ -32,19 +32,20 @@ const Register: React.FC = () => {
 
   const history = useHistory();
 
-  const sendData = useCallback(async (data) => {
-    setLoading(true);
+  const sendData = useCallback(
+    async (data) => {
+      setLoading(true);
 
-    try {
-      await api.post("/owner", data);
+      try {
+        await api.post("/owner", data);
 
-      history.push("/");
-    } catch (err) {
-      console.log(err);
-
-      setLoading(false);
-    }
-  }, []);
+        history.push("/");
+      } catch (err) {
+        setLoading(false);
+      }
+    },
+    [history],
+  );
 
   const handleSubmit = useCallback(
     async (data: DataFormProps): Promise<void> => {

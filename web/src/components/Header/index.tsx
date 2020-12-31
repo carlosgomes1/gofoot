@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Logo from "../../assets/images/logo.png";
 
@@ -8,9 +9,11 @@ const Header: React.FC = () => {
   return (
     <Container>
       <Content>
-        <img src={Logo} alt="Logo" />
+        <Link to="/">
+          <img src={Logo} alt="Logo" />
+        </Link>
         <Navbar>
-          <NavItem to="/">Login</NavItem>
+          <NavItem to="/login">Login</NavItem>
           <Divisor />
           <NavItem to="/register">Cadastre-se</NavItem>
         </Navbar>
