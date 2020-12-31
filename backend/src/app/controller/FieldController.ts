@@ -5,6 +5,17 @@ import * as Yup from "yup";
 import Field from "../models/Field";
 
 class FieldController {
+  async indexFieldsOfOwner(request: Request, response: Response) {
+    const repository = getRepository(Field);
+
+    const fields = await repository.findAndCount({
+      where: { fkOwner: request.idOwner },
+    });
+    console.log(`${fields[1]} fields were found.`);
+
+    return response.json({ fields: fields[0], total: fields[1] });
+  }
+
   async destroy(request: Request, response: Response) {
     const repository = getRepository(Field);
 
@@ -41,7 +52,7 @@ class FieldController {
     const fields = await repository.findAndCount();
     console.log(`${fields[1]} fields were found.`);
 
-    return response.json(fields);
+    return response.json({ fields: fields[0], total: fields[1] });
   }
 
   async update(request: Request, response: Response) {

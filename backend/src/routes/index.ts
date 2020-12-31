@@ -30,6 +30,7 @@ routes.delete("/owner", OwnerController.destroy);
 routes.post("/field", FieldController.store);
 routes.put("/field/:id", FieldController.update);
 routes.delete("/field/:id", FieldController.destroy);
+routes.get("/fieldOfOwner", FieldController.indexFieldsOfOwner);
 
 routes.post("/responsible/:id", ResponsibleController.store);
 routes.delete("/responsible/:id", ResponsibleController.destroy);
