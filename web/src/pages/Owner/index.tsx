@@ -31,6 +31,21 @@ const Owner: React.FC = () => {
 
   const { token } = useAuth();
 
+  const handleDeleteField = useCallback(
+    async (idField: string) => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await api.delete(`/field/${idField}`, config);
+
+      setFields(fields.filter((field) => field.idField !== idField));
+    },
+    [token, fields],
+  );
+
   const getFields = useCallback(async () => {
     const config = {
       headers: {
@@ -59,7 +74,10 @@ const Owner: React.FC = () => {
           {fields.map((field) => (
             <FieldItem key={field.idField}>
               <div>
-                <FiTrash2 size={32} />
+                <FiTrash2
+                  onClick={() => handleDeleteField(field.idField)}
+                  size={32}
+                />
                 <FiSettings size={32} />
               </div>
               <h1>Nome</h1>

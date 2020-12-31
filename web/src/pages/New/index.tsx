@@ -82,8 +82,6 @@ const New: React.FC = () => {
       } catch (err) {
         const errors = getValidationErrors(err);
 
-        console.log(err);
-
         formRef.current?.setErrors(errors);
       }
     },
