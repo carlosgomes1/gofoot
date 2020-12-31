@@ -19,6 +19,7 @@ interface AuthContextData {
   owner: Owner;
   token: string;
   signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): void;
 }
 
 interface AuthState {
@@ -56,11 +57,16 @@ const AuthProvider: React.FC = ({ children }) => {
       localStorage.setItem("@gofoot:owner", JSON.stringify(owner));
 
       setData({ token, owner });
-
-      console.log(response.data);
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem("@gofoot:token");
+    localStorage.removeItem("@gofoot:owner");
+
+    setData({} as AuthState);
   }, []);
 
   return (
@@ -69,6 +75,7 @@ const AuthProvider: React.FC = ({ children }) => {
         token: data.token,
         owner: data.owner,
         signIn,
+        signOut,
       }}
     >
       {children}

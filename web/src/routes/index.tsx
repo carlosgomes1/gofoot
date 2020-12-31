@@ -17,7 +17,6 @@ const Routes: React.FC = () => (
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/owner" isPrivate component={Owner} />
-    <Route path="/" isPrivate component={NotFound} />
     <Route path="/" component={NotFound} />
   </Switch>
 );
