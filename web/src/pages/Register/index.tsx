@@ -1,10 +1,12 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { FaWhatsapp, FaBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 
+import api from "../../services/api";
 import getValidationErrors from "../../utils/getValidationErrors";
 
 import { Container, Content } from "./styles";
@@ -13,12 +15,39 @@ import JogadorSVG from "../../assets/images/jogador-de-futebol.svg";
 
 import Header from "../../components/Header";
 import Input from "../../components/Input";
+import Loading from "../../components/Loading";
+
+interface DataFormProps {
+  email: string;
+  password: string;
+  whatsapp: string;
+  uf: string;
+  city: string;
+}
 
 const Register: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const formRef = useRef<FormHandles>(null);
 
+  const history = useHistory();
+
+  const sendData = useCallback(async (data) => {
+    setLoading(true);
+
+    try {
+      await api.post("/owner", data);
+
+      history.push("/");
+    } catch (err) {
+      console.log(err);
+
+      setLoading(false);
+    }
+  }, []);
+
   const handleSubmit = useCallback(
-    async (data: string | unknown): Promise<void> => {
+    async (data: DataFormProps): Promise<void> => {
       try {
         formRef.current?.setErrors({});
 
@@ -38,13 +67,15 @@ const Register: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        sendData(data);
       } catch (err) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
       }
     },
-    [],
+    [sendData],
   );
 
   return (
@@ -54,25 +85,29 @@ const Register: React.FC = () => {
         <img src={JogadorSVG} alt="Jogador de futebol" />
         <div>
           <h1>Registre-se aqui!</h1>
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              placeholder="E-mail"
-              name="email"
-              icon={FiMail}
-            />
-            <Input
-              type="password"
-              placeholder="Senha"
-              name="password"
-              icon={FiLock}
-            />
-            <Input placeholder="WhatsApp" name="whatsapp" icon={FaWhatsapp} />
-            <Input placeholder="Estado" name="uf" icon={FaMapMarkerAlt} />
-            <Input placeholder="Cidade" name="city" icon={FaBuilding} />
+          {loading ? (
+            <Loading />
+          ) : (
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <Input
+                type="email"
+                placeholder="E-mail"
+                name="email"
+                icon={FiMail}
+              />
+              <Input
+                type="password"
+                placeholder="Senha"
+                name="password"
+                icon={FiLock}
+              />
+              <Input placeholder="WhatsApp" name="whatsapp" icon={FaWhatsapp} />
+              <Input placeholder="Estado" name="uf" icon={FaMapMarkerAlt} />
+              <Input placeholder="Cidade" name="city" icon={FaBuilding} />
 
-            <button type="submit">Cadastrar</button>
-          </Form>
+              <button type="submit">Cadastrar</button>
+            </Form>
+          )}
         </div>
       </Content>
     </Container>
