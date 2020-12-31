@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Map } from "react-leaflet";
 import { Form } from "@unform/web";
 
 import WaveSVG from "../../assets/images/wave.svg";
@@ -17,6 +16,8 @@ export const Container = styled.div`
 
 export const Content = styled(Form)`
   flex: 1;
+
+  margin-top: 24px;
 
   width: 50%;
 
@@ -61,9 +62,4 @@ export const InputContainer = styled.div`
     font-size: 2rem;
     font-weight: 500;
   }
-`;
-
-export const MapContainer = styled(Map)`
-  width: 100%;
-  height: 500px;
 `;

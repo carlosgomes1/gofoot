@@ -1,13 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
 
 import Header from "../../components/Header";
 import Options from "../../components/Options";
 import Input from "../../components/Input";
 
-import { Container, Content, InputContainer, MapContainer } from "./styles";
+import getValidationErrors from "../../utils/getValidationErrors";
+import api from "../../services/api";
+
+import { useAuth } from "../../hooks/auth";
+
+import { Container, Content, InputContainer } from "./styles";
+
+interface DataFormProps {
+  name: string;
+  logradouro: string;
+  number: string;
+  complement?: string;
+  latitude: string;
+  longitude: string;
+}
 
 const New: React.FC = () => {
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
@@ -19,6 +35,9 @@ const New: React.FC = () => {
     0,
   ]);
 
+  const { token } = useAuth();
+  const history = useHistory();
+
   const formRef = useRef<FormHandles>(null);
 
   function handleMapClick(event: LeafletMouseEvent): void {
@@ -27,9 +46,49 @@ const New: React.FC = () => {
     formRef.current?.setFieldValue("longitude", event.latlng.lng);
   }
 
-  function handleSubmit(data: string | unknown): void {
-    console.log(initialPosition[0], initialPosition[1]);
-  }
+  const sendData = useCallback(
+    async (data: DataFormProps) => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await api.post("/field", data, config);
+      history.push("/");
+    },
+    [token, history],
+  );
+
+  const handleSubmit = useCallback(
+    async (data: DataFormProps) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          name: Yup.string().required("O nome da quadra é obrigatório"),
+          logradouro: Yup.string().required("O logradouro é obrigatório."),
+          number: Yup.string().required("O número é obrigatório."),
+          complement: Yup.string(),
+          latitude: Yup.number().required("A latitude é obrigatório."),
+          longitude: Yup.number().required("A longitude é obrigatório."),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        sendData(data);
+      } catch (err) {
+        const errors = getValidationErrors(err);
+
+        console.log(err);
+
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [sendData],
+  );
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -65,7 +124,7 @@ const New: React.FC = () => {
         <Map
           center={initialPosition}
           zoom={13}
-          style={{ width: "100%", height: 500 }}
+          style={{ width: "100%", height: 500, margin: "8px 0" }}
           onClick={handleMapClick}
           scrollWheelZoom
         >
