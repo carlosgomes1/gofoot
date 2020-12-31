@@ -27,10 +27,23 @@ const Login: React.FC = () => {
 
   const { signIn } = useAuth();
 
-  const handleSubmit = useCallback(
-    async (data: DataFormProps): Promise<void> => {
+  const sendData = useCallback(
+    async (data) => {
       setLoading(true);
 
+      try {
+        signIn(data);
+      } catch (err) {
+        setLoading(false);
+      }
+
+      setLoading(false);
+    },
+    [signIn],
+  );
+
+  const handleSubmit = useCallback(
+    async (data: DataFormProps): Promise<void> => {
       try {
         formRef.current?.setErrors({});
 
@@ -47,18 +60,14 @@ const Login: React.FC = () => {
           abortEarly: false,
         });
 
-        signIn(data);
+        sendData(data);
       } catch (err) {
         const errors = getValidationErrors(err);
 
-        console.log(err);
-
         formRef.current?.setErrors(errors);
       }
-
-      setLoading(false);
     },
-    [signIn],
+    [sendData],
   );
 
   return (

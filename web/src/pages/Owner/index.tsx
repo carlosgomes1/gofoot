@@ -1,14 +1,17 @@
 import React from "react";
 
 import Header from "../../components/Header";
+import Options from "../../components/Options";
 
-import { Container } from "./styles";
+import { Container, Content } from "./styles";
 
 const Owner: React.FC = () => {
   return (
     <Container>
       <Header />
-      <h1> Hello to Owners! </h1>
+      <Content>
+        <Options selected="owner" />
+      </Content>
     </Container>
   );
 };

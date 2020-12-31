@@ -12,3 +12,10 @@ export const Container = styled.div`
   background: url(${WaveSVG}) no-repeat;
   background-position-y: -16px;
 `;
+
+export const Content = styled.div`
+  width: 80%;
+
+  display: flex;
+  align-items: center;
+`;
