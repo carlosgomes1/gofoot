@@ -49,11 +49,11 @@ const Login: React.FC = () => {
 
         const schema = Yup.object().shape({
           email: Yup.string()
-            .email("E-mail not valid.")
-            .required("E-mail is required."),
+            .email("Este e-mail não é válido.")
+            .required("O e-mail é obrigatório."),
           password: Yup.string()
-            .min(6, "Password must have at least 6 character")
-            .required("Password is required."),
+            .min(6, "A senha deve ter no mínimo 6 carácteres.")
+            .required("A senha é obrigatória."),
         });
 
         await schema.validate(data, {
@@ -93,7 +93,7 @@ const Login: React.FC = () => {
                 icon={FiLock}
               />
 
-              <button type="submit">Cadastrar</button>
+              <button type="submit">Entrar</button>
             </Form>
           )}
         </div>

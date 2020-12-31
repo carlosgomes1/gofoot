@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 
 import Owner from "../pages/Owner";
 import New from "../pages/New";
+import Field from "../pages/Field";
 
 import NotFound from "../pages/NotFound";
 
@@ -19,6 +20,7 @@ const Routes: React.FC = () => (
     <Route path="/login" component={Login} />
     <Route path="/owner" isPrivate component={Owner} />
     <Route path="/new" isPrivate component={New} />
+    <Route path="/field" isPrivate component={Field} />
     <Route path="/" component={NotFound} />
   </Switch>
 );

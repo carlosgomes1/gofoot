@@ -14,7 +14,12 @@ import api from "../../services/api";
 
 import { useAuth } from "../../hooks/auth";
 
-import { Container, Content, InputContainer } from "./styles";
+import {
+  Container,
+  Content,
+  InputContainer,
+  DoubleInputContainer,
+} from "./styles";
 
 interface DataFormProps {
   name: string;
@@ -102,22 +107,33 @@ const New: React.FC = () => {
       <Options selected="new" />
 
       <Content ref={formRef} onSubmit={handleSubmit}>
-        <InputContainer>
-          <span>Nome da quadra</span>
-          <Input name="name" />
-        </InputContainer>
-        <InputContainer>
-          <span>Logradouro</span>
-          <Input name="logradouro" />
-        </InputContainer>
-        <InputContainer>
-          <span>Número</span>
-          <Input name="number" />
-        </InputContainer>
-        <InputContainer>
-          <span>Complemento</span>
-          <Input name="complement" />
-        </InputContainer>
+        <DoubleInputContainer>
+          <InputContainer>
+            <span>
+              Nome da quadra <h4>*</h4>
+            </span>
+            <Input name="name" />
+          </InputContainer>
+          <InputContainer>
+            <span>
+              Logradouro <h4>*</h4>
+            </span>
+            <Input name="logradouro" />
+          </InputContainer>
+        </DoubleInputContainer>
+
+        <DoubleInputContainer>
+          <InputContainer>
+            <span>
+              Número <h4>*</h4>
+            </span>
+            <Input name="number" />
+          </InputContainer>
+          <InputContainer>
+            <span>Complemento</span>
+            <Input name="complement" />
+          </InputContainer>
+        </DoubleInputContainer>
 
         <Map
           center={initialPosition}
@@ -133,14 +149,20 @@ const New: React.FC = () => {
           <Marker position={selectedPosition} />
         </Map>
 
-        <InputContainer>
-          <span>Latitude</span>
-          <Input name="latitude" />
-        </InputContainer>
-        <InputContainer>
-          <span>Longitude</span>
-          <Input name="longitude" />
-        </InputContainer>
+        <DoubleInputContainer>
+          <InputContainer>
+            <span>
+              Latitude <h4>*</h4>
+            </span>
+            <Input name="latitude" />
+          </InputContainer>
+          <InputContainer>
+            <span>
+              Longitude <h4>*</h4>
+            </span>
+            <Input name="longitude" />
+          </InputContainer>
+        </DoubleInputContainer>
 
         <button type="submit">Criar campo</button>
       </Content>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { FiTrash2, FiSettings } from "react-icons/fi";
 
 import api from "../../services/api";
@@ -30,6 +31,7 @@ const Owner: React.FC = () => {
   const [totalFields, setTotalFields] = useState(0);
 
   const { token } = useAuth();
+  const history = useHistory();
 
   const handleDeleteField = useCallback(
     async (idField: string) => {
@@ -44,6 +46,13 @@ const Owner: React.FC = () => {
       setFields(fields.filter((field) => field.idField !== idField));
     },
     [token, fields],
+  );
+
+  const handleNavigateToField = useCallback(
+    (idField: string) => {
+      history.push("/field", { idField });
+    },
+    [history],
   );
 
   const getFields = useCallback(async () => {
@@ -78,7 +87,10 @@ const Owner: React.FC = () => {
                   onClick={() => handleDeleteField(field.idField)}
                   size={32}
                 />
-                <FiSettings size={32} />
+                <FiSettings
+                  size={32}
+                  onClick={() => handleNavigateToField(field.idField)}
+                />
               </div>
               <h1>Nome</h1>
               <span>{field.name}</span>

@@ -50,16 +50,33 @@ export const Content = styled(Form)`
   }
 `;
 
+export const DoubleInputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 60%;
+  width: 48%;
 
   margin: 8px 0;
 
   span {
     font-size: 2rem;
     font-weight: 500;
+
+    display: flex;
+
+    h4 {
+      margin-left: 8px;
+
+      font-weight: 500;
+      color: #c53030;
+    }
   }
 `;
