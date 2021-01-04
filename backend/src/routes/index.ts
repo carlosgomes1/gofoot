@@ -36,5 +36,6 @@ routes.post("/responsible/:id", ResponsibleController.store);
 routes.delete("/responsible/:id", ResponsibleController.destroy);
 
 routes.post("/contact/:id", ContactController.store);
+routes.delete("/contact/:id", ContactController.destroy);
 
 export default routes;

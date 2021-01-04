@@ -17,6 +17,16 @@ class ContactController {
     return response.json(contacts);
   }
 
+  async destroy(request: Request, response: Response) {
+    const repository = getRepository(Contact);
+
+    await repository.delete({ idContact: request.params.id });
+
+    return response.json({
+      message: "The contact was successfully excluded.",
+    });
+  }
+
   async store(request: Request, response: Response) {
     const schema = Yup.object().shape({
       type: Yup.string().required("Type is required."),
