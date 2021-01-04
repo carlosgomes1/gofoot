@@ -20,10 +20,10 @@ const Options: React.FC<OptionsProps> = ({ selected }) => {
           <FiPlus size={56} />
           <span>Novo campo</span>
         </OptionsItem>
-        <OptionsItem selected={selected === "config"} to="/">
+        {/* <OptionsItem selected={selected === "config"} to="/">
           <FiSettings size={56} />
           <span>Configurações</span>
-        </OptionsItem>
+        </OptionsItem> */}
       </Content>
     </Container>
   );
