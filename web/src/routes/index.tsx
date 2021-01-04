@@ -11,6 +11,7 @@ import Owner from "../pages/Owner";
 import New from "../pages/New";
 import Field from "../pages/Field";
 import Responsible from "../pages/Responsible";
+import NewResponsible from "../pages/NewResponsible";
 
 import NotFound from "../pages/NotFound";
 
@@ -23,6 +24,7 @@ const Routes: React.FC = () => (
     <Route path="/new" isPrivate component={New} />
     <Route path="/field" isPrivate component={Field} />
     <Route path="/responsible" isPrivate component={Responsible} />
+    <Route path="/newResponsible" isPrivate component={NewResponsible} />
     <Route path="/" component={NotFound} />
   </Switch>
 );

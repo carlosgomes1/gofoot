@@ -15,7 +15,7 @@ const Aside: React.FC<AsideProps> = ({ selected }) => {
       <AsideItem to="/responsible" selected={selected === "responsible"}>
         <span>Responsáveis</span>
       </AsideItem>
-      <AsideItem to="/field" selected={selected === "newResponsible"}>
+      <AsideItem to="/newResponsible" selected={selected === "newResponsible"}>
         <span>Novo responsável</span>
       </AsideItem>
     </Container>
