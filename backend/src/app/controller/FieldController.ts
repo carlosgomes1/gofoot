@@ -35,7 +35,7 @@ class FieldController {
     try {
       const field = await repository.findOne({
         where: { idField },
-        relations: ["responsibles"],
+        relations: ["responsibles", "responsibles.contacts"],
       });
 
       return response.json(field);
