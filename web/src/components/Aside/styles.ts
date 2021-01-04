@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 interface AsideProps {
   selected: boolean;
@@ -15,8 +16,12 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const AsideItem = styled.div<AsideProps>`
+export const AsideItem = styled(Link)<AsideProps>`
   height: 60px;
+
+  text-decoration: none;
+
+  color: #312e38;
 
   display: flex;
   align-items: center;

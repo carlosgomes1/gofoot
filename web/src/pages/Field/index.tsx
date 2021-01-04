@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import { FormHandles } from "@unform/core";
-import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
 
 import { Container, Content, Update, InputContainer, Left } from "./styles";
@@ -11,14 +10,11 @@ import api from "../../services/api";
 import getValidationErrors from "../../utils/getValidationErrors";
 
 import { useAuth } from "../../hooks/auth";
+import { useField } from "../../hooks/field";
 
 import Header from "../../components/Header";
 import Aside from "../../components/Aside";
 import Input from "../../components/Input";
-
-interface LocationProps {
-  idField: string;
-}
 
 interface Responsible {
   idResponsible: string;
@@ -56,10 +52,9 @@ const Field: React.FC = () => {
     {} as ResponseDataField,
   );
 
-  const { idField } = useLocation().state as LocationProps;
-
   const formRef = useRef<FormHandles>(null);
   const { token } = useAuth();
+  const { field: fieldContext } = useField();
 
   const sendUpdate = useCallback(
     async (data: DataFormProps) => {
@@ -103,21 +98,18 @@ const Field: React.FC = () => {
   );
 
   function handleMapClick(event: LeafletMouseEvent): void {
-    setSelectedPosition([event.latlng.lat, event.latlng.lng]);
+    setSelectedPosition([event.latlng.lat, event.latlng.lng] || [0, 0]);
     formRef.current?.setFieldValue("latitude", event.latlng.lat);
     formRef.current?.setFieldValue("longitude", event.latlng.lng);
   }
 
-  const getField = useCallback(async () => {
-    await api.get<ResponseDataField>(`/field/${idField}`).then((response) => {
-      setField(response.data);
-      setSelectedPosition([response.data.latitude, response.data.longitude]);
-    });
-  }, [idField]);
-
   useEffect(() => {
-    getField();
-  }, [idField, getField]);
+    setField(fieldContext);
+    setSelectedPosition([
+      fieldContext.latitude || 0,
+      fieldContext.longitude || 0,
+    ]);
+  }, [fieldContext]);
 
   return (
     <Container>
@@ -184,7 +176,7 @@ const Field: React.FC = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker position={selectedPosition} />
-          </Map>
+          </Map>{" "}
         </Update>
       </Content>
     </Container>

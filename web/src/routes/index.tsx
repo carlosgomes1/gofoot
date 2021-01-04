@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import Owner from "../pages/Owner";
 import New from "../pages/New";
 import Field from "../pages/Field";
+import Responsible from "../pages/Responsible";
 
 import NotFound from "../pages/NotFound";
 
@@ -21,6 +22,7 @@ const Routes: React.FC = () => (
     <Route path="/owner" isPrivate component={Owner} />
     <Route path="/new" isPrivate component={New} />
     <Route path="/field" isPrivate component={Field} />
+    <Route path="/responsible" isPrivate component={Responsible} />
     <Route path="/" component={NotFound} />
   </Switch>
 );

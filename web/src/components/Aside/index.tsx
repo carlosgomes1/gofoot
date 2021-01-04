@@ -9,13 +9,13 @@ interface AsideProps {
 const Aside: React.FC<AsideProps> = ({ selected }) => {
   return (
     <Container>
-      <AsideItem selected={selected === "field"}>
+      <AsideItem to="/field" selected={selected === "field"}>
         <span>Campo</span>
       </AsideItem>
-      <AsideItem selected={selected === "responsible"}>
+      <AsideItem to="/responsible" selected={selected === "responsible"}>
         <span>Responsáveis</span>
       </AsideItem>
-      <AsideItem selected={selected === "newResponsible"}>
+      <AsideItem to="/field" selected={selected === "newResponsible"}>
         <span>Novo responsável</span>
       </AsideItem>
     </Container>

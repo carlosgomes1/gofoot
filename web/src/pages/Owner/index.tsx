@@ -4,6 +4,7 @@ import { FiTrash2, FiSettings } from "react-icons/fi";
 
 import api from "../../services/api";
 import { useAuth } from "../../hooks/auth";
+import { useField } from "../../hooks/field";
 
 import Header from "../../components/Header";
 import Options from "../../components/Options";
@@ -31,6 +32,7 @@ const Owner: React.FC = () => {
   const [totalFields, setTotalFields] = useState(0);
 
   const { token } = useAuth();
+  const { setField } = useField();
   const history = useHistory();
 
   const handleDeleteField = useCallback(
@@ -50,9 +52,12 @@ const Owner: React.FC = () => {
 
   const handleNavigateToField = useCallback(
     (idField: string) => {
-      history.push("/field", { idField });
+      localStorage.setItem("@gofoot:idField", idField);
+
+      setField(idField);
+      history.push("/field");
     },
-    [history],
+    [history, setField],
   );
 
   const getFields = useCallback(async () => {
