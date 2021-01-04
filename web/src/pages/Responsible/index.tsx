@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useCallback, useRef } from "react";
 import { FaWhatsapp, FaPhone, FaPlus } from "react-icons/fa";
 import { FiX, FiTrash2 } from "react-icons/fi";
@@ -51,6 +53,7 @@ const AddContact: React.FC<AddContactProps> = ({
   const { attField } = useField();
   const { token } = useAuth();
 
+  const xRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<FormHandles>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -90,6 +93,7 @@ const AddContact: React.FC<AddContactProps> = ({
         });
 
         sendData(data);
+        xRef.current?.click();
       } catch (err) {
         const errors = getValidationErrors(err);
 
@@ -102,7 +106,9 @@ const AddContact: React.FC<AddContactProps> = ({
   return (
     <AddContainer active={active}>
       <AddContent ref={formRef} onSubmit={handleSubmit}>
-        <FiX size={36} onClick={setActiveFalse} />
+        <div onClick={setActiveFalse} ref={xRef}>
+          <FiX size={36} />
+        </div>
         <h1>Adicionar novo contato para {addContact.name}</h1>
         <select ref={selectRef}>
           <option value="Whatsapp">WhatsApp</option>
