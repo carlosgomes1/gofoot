@@ -39,14 +39,16 @@ export const Container = styled(animated.div)<ContainerProps>`
   div {
     flex: 1;
     strong {
-      font: 700 1.6rem Archivo;
+      font-weight: 500;
+      font-size: 1.6rem;
     }
     p {
       margin-top: 4px;
       font-size: 1.4rem;
       opacity: 0.8;
       line-height: 20px;
-      font: 700 1.4rem Archivo;
+      font-weight: 500;
+      font-size: 1.4rem;
     }
   }
   button {

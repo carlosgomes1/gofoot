@@ -11,6 +11,7 @@ import getValidationErrors from "../../utils/getValidationErrors";
 
 import { useAuth } from "../../hooks/auth";
 import { useField } from "../../hooks/field";
+import { useToast } from "../../hooks/toast";
 
 import Header from "../../components/Header";
 import Aside from "../../components/Aside";
@@ -53,22 +54,38 @@ const Field: React.FC = () => {
   );
 
   const formRef = useRef<FormHandles>(null);
+
   const { token } = useAuth();
+  const { addToast } = useToast();
   const { field: fieldContext, attField } = useField();
 
   const sendUpdate = useCallback(
     async (data: DataFormProps) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.put(`/field/${field.idField}`, data, config);
+        await api.put(`/field/${field.idField}`, data, config);
 
-      attField();
+        attField();
+
+        addToast({
+          type: "success",
+          title: "Campo atualizado com sucesso!",
+        });
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao atualizar campo",
+          description:
+            "Ocorreu um erro durante o envio de informações ao servidor, tente novamente mais tarde.",
+        });
+      }
     },
-    [token, field, attField],
+    [token, field, attField, addToast],
   );
 
   const handleSubmit = useCallback(
@@ -94,9 +111,16 @@ const Field: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao atualizar campo",
+          description:
+            "Ocorreu um erro durante a atualização do campo, tente novamente.",
+        });
       }
     },
-    [sendUpdate],
+    [sendUpdate, addToast],
   );
 
   function handleMapClick(event: LeafletMouseEvent): void {

@@ -5,11 +5,11 @@ import { FieldProvider } from "./field";
 import { ToastProvider } from "./toast";
 
 const AppProvider: React.FC = ({ children }) => (
-  <AuthProvider>
-    <ToastProvider>
+  <ToastProvider>
+    <AuthProvider>
       <FieldProvider>{children}</FieldProvider>
-    </ToastProvider>
-  </AuthProvider>
+    </AuthProvider>
+  </ToastProvider>
 );
 
 export default AppProvider;

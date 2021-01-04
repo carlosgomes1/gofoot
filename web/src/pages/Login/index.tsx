@@ -10,6 +10,7 @@ import Input from "../../components/Input";
 
 import getValidationErrors from "../../utils/getValidationErrors";
 import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 import JogadorSVG from "../../assets/images/jogador-de-futebol2.svg";
 
@@ -26,6 +27,7 @@ const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const sendData = useCallback(
     async (data) => {
@@ -65,9 +67,15 @@ const Login: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao logar",
+          description: "Ocorreu um erro durante o login, tente novamente.",
+        });
       }
     },
-    [sendData],
+    [sendData, addToast],
   );
 
   return (

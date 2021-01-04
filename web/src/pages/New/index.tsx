@@ -13,6 +13,7 @@ import getValidationErrors from "../../utils/getValidationErrors";
 import api from "../../services/api";
 
 import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 import {
   Container,
@@ -41,6 +42,7 @@ const New: React.FC = () => {
   ]);
 
   const { token } = useAuth();
+  const { addToast } = useToast();
   const history = useHistory();
 
   const formRef = useRef<FormHandles>(null);
@@ -53,16 +55,35 @@ const New: React.FC = () => {
 
   const sendData = useCallback(
     async (data: DataFormProps) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.post("/field", data, config);
-      history.push("/");
+        await api.post("/field", data, config);
+
+        addToast({
+          type: "success",
+          title: "Campo criado com sucesso",
+          description:
+            "O novo campo foi criado, você será redirecionado em 3 segundos.",
+        });
+
+        setTimeout(() => {
+          history.push("/");
+        }, 3000);
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao criar campo",
+          description:
+            "Ocorreu um erro durante o envio de informações, tente novamente mais tarde.",
+        });
+      }
     },
-    [token, history],
+    [token, history, addToast],
   );
 
   const handleSubmit = useCallback(
@@ -88,9 +109,16 @@ const New: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao criar campo",
+          description:
+            "Ocorreu um erro durante a criação do campo, tente novamente.",
+        });
       }
     },
-    [sendData],
+    [sendData, addToast],
   );
 
   useEffect(() => {

@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import api from "../../services/api";
 import getValidationErrors from "../../utils/getValidationErrors";
 
+import { useToast } from "../../hooks/toast";
+
 import { Container, Content } from "./styles";
 
 import JogadorSVG from "../../assets/images/jogador-de-futebol.svg";
@@ -31,6 +33,7 @@ const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
+  const { addToast } = useToast();
 
   const sendData = useCallback(
     async (data) => {
@@ -39,12 +42,27 @@ const Register: React.FC = () => {
       try {
         await api.post("/owner", data);
 
-        history.push("/");
+        addToast({
+          type: "success",
+          title: "Conta criada com sucesso",
+          description:
+            "Sua nova conta foi criada, você será redirecionado em 3 segundos.",
+        });
+
+        setTimeout(() => {
+          history.push("/");
+        }, 3000);
       } catch (err) {
         setLoading(false);
+        addToast({
+          type: "error",
+          title: "Erro ao criar conta",
+          description:
+            "Ocorreu um erro durante o envio de informações, tente novamente mais tarde.",
+        });
       }
     },
-    [history],
+    [history, addToast],
   );
 
   const handleSubmit = useCallback(
@@ -74,9 +92,16 @@ const Register: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao criar nova conta.",
+          description:
+            "Ocorreu um erro durante a criação da sua conta, tente novamente.",
+        });
       }
     },
-    [sendData],
+    [sendData, addToast],
   );
 
   return (

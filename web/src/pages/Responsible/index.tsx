@@ -23,6 +23,7 @@ import getValidationErrors from "../../utils/getValidationErrors";
 
 import { useField } from "../../hooks/field";
 import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 import Header from "../../components/Header";
 import Aside from "../../components/Aside";
@@ -52,6 +53,7 @@ const AddContact: React.FC<AddContactProps> = ({
 }) => {
   const { attField } = useField();
   const { token } = useAuth();
+  const { addToast } = useToast();
 
   const xRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<FormHandles>(null);
@@ -59,24 +61,38 @@ const AddContact: React.FC<AddContactProps> = ({
 
   const sendData = useCallback(
     async (data: ContactDataForm) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.post(
-        `/contact/${addContact.idResponsible}`,
-        {
-          type: selectRef.current?.value,
-          value: data.value,
-        },
-        config,
-      );
+        await api.post(
+          `/contact/${addContact.idResponsible}`,
+          {
+            type: selectRef.current?.value,
+            value: data.value,
+          },
+          config,
+        );
 
-      attField();
+        addToast({
+          type: "success",
+          title: "Contato criado com sucesso",
+        });
+
+        attField();
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao criar responsável",
+          description:
+            "Ocorreu um erro durante o envio de informações, tente novamente mais tarde.",
+        });
+      }
     },
-    [attField, addContact.idResponsible, token],
+    [attField, addContact.idResponsible, token, addToast],
   );
 
   const handleSubmit = useCallback(
@@ -98,9 +114,16 @@ const AddContact: React.FC<AddContactProps> = ({
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao criar responsável",
+          description:
+            "Ocorreu um erro durante a criação do contato, tente novamente.",
+        });
       }
     },
-    [sendData],
+    [sendData, addToast],
   );
 
   return (
@@ -131,41 +154,70 @@ const Responsible: React.FC = () => {
 
   const { field, attField } = useField();
   const { token } = useAuth();
+  const { addToast } = useToast();
 
   const handleDeleteResponsible = useCallback(
     async (idResponsible: string) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.delete(`/responsible/${idResponsible}`, config);
+        await api.delete(`/responsible/${idResponsible}`, config);
 
-      attField();
+        attField();
 
-      field.responsibles = field.responsibles.filter(
-        (responsible) => responsible.idResponsible !== idResponsible,
-      );
+        field.responsibles = field.responsibles.filter(
+          (responsible) => responsible.idResponsible !== idResponsible,
+        );
+
+        addToast({
+          type: "success",
+          title: "Responsável excluído com sucesso",
+        });
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao excluir responsável",
+          description:
+            "Ocorreu um erro durante a exclusão das informações no servidor, tente novamente mais tarde.",
+        });
+      }
     },
-    [token, field, attField],
+    [token, field, attField, addToast],
   );
 
   const handleDeleteContact = useCallback(
     async (idContact: string) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.delete(`/contact/${idContact}`, config);
+        await api.delete(`/contact/${idContact}`, config);
 
-      attField();
+        attField();
 
-      setAttScreen(!attScreen);
+        addToast({
+          type: "success",
+          title: "Contato excluído com sucesso",
+        });
+
+        setAttScreen(!attScreen);
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao excluir contato",
+          description:
+            "Ocorreu um erro durante a exclusão das informações no servidor, tente novamente mais tarde.",
+        });
+      }
     },
-    [token, attField, attScreen],
+    [token, attField, attScreen, addToast],
   );
 
   const handleCloseAddContact = useCallback((): void => {

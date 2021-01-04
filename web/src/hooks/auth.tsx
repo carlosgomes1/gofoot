@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
 
 import api from "../services/api";
+import { useToast } from "./toast";
 
 interface SignInCredentials {
   email: string;
@@ -44,23 +45,33 @@ const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   });
 
-  const signIn = useCallback(async ({ email, password }) => {
-    try {
-      const response = await api.post<AuthState>("/session", {
-        email,
-        password,
-      });
+  const { addToast } = useToast();
 
-      const { owner, token } = response.data;
+  const signIn = useCallback(
+    async ({ email, password }) => {
+      try {
+        const response = await api.post<AuthState>("/session", {
+          email,
+          password,
+        });
 
-      localStorage.setItem("@gofoot:token", token);
-      localStorage.setItem("@gofoot:owner", JSON.stringify(owner));
+        const { owner, token } = response.data;
 
-      setData({ token, owner });
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+        localStorage.setItem("@gofoot:token", token);
+        localStorage.setItem("@gofoot:owner", JSON.stringify(owner));
+
+        setData({ token, owner });
+      } catch (err) {
+        addToast({
+          type: "error",
+          title: "Erro de login",
+          description:
+            "Ocorreu um erro ao fazer o login no servidor, tente novamente mais tarde.",
+        });
+      }
+    },
+    [addToast],
+  );
 
   const signOut = useCallback(() => {
     localStorage.removeItem("@gofoot:token");

@@ -12,6 +12,7 @@ import Input from "../../components/Input";
 
 import { useField } from "../../hooks/field";
 import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 import api from "../../services/api";
 
@@ -26,23 +27,43 @@ const NewResponsible: React.FC = () => {
 
   const { attField, field } = useField();
   const { token } = useAuth();
+  const { addToast } = useToast();
 
   const history = useHistory();
 
   const sendData = useCallback(
     async (data: ResponsibleDataForm) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      await api.post(`/responsible/${field.idField}`, data, config);
+        await api.post(`/responsible/${field.idField}`, data, config);
 
-      attField();
-      history.push("/responsible");
+        attField();
+
+        addToast({
+          type: "success",
+          title: "Responsável criado com sucesso",
+          description:
+            "O novo responsável foi criado, você será redirecionado em 3 segundos.",
+        });
+
+        setTimeout(() => {
+          history.push("/responsible");
+        }, 3000);
+      } catch (error) {
+        addToast({
+          type: "error",
+          title: "Erro ao criar responsável",
+          description:
+            "Ocorreu um erro durante o envio de informações, tente novamente mais tarde.",
+        });
+      }
     },
-    [attField, token, field.idField, history],
+    [attField, token, field.idField, history, addToast],
   );
 
   const handleSubmit = useCallback(
@@ -63,9 +84,16 @@ const NewResponsible: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+
+        addToast({
+          type: "error",
+          title: "Erro ao criar responsável",
+          description:
+            "Ocorreu um erro durante a criação do responsável, tente novamente.",
+        });
       }
     },
-    [sendData],
+    [sendData, addToast],
   );
 
   return (
