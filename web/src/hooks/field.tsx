@@ -23,6 +23,7 @@ interface Field {
 interface FieldContextData {
   field: Field;
   setField(idField: string): void;
+  attField(): void;
 }
 
 const FieldContext = createContext<FieldContextData>({} as FieldContextData);
@@ -52,8 +53,19 @@ const FieldProvider: React.FC = ({ children }) => {
     }
   }, []);
 
+  const attField = useCallback(async () => {
+    try {
+      const response = await api.get<Field>(`/field/${fieldData.idField}`);
+
+      localStorage.setItem("@gofoot:field", JSON.stringify(response.data));
+      setFieldData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [fieldData.idField]);
+
   return (
-    <FieldContext.Provider value={{ setField, field: fieldData }}>
+    <FieldContext.Provider value={{ setField, field: fieldData, attField }}>
       {children}
     </FieldContext.Provider>
   );

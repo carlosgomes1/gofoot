@@ -39,8 +39,8 @@ interface DataFormProps {
   logradouro: string;
   number: string;
   complement?: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }
 
 const Field: React.FC = () => {
@@ -54,10 +54,20 @@ const Field: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
   const { token } = useAuth();
-  const { field: fieldContext } = useField();
+  const { field: fieldContext, attField } = useField();
 
   const sendUpdate = useCallback(
     async (data: DataFormProps) => {
+      setField({
+        ...field,
+        name: data.name,
+        logradouro: data.logradouro,
+        number: data.number,
+        complement: data.complement,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      });
+
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,8 +75,10 @@ const Field: React.FC = () => {
       };
 
       await api.put(`/field/${field.idField}`, data, config);
+
+      attField();
     },
-    [token, field.idField],
+    [token, field, attField],
   );
 
   const handleSubmit = useCallback(

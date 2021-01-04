@@ -46,8 +46,9 @@ const Owner: React.FC = () => {
       await api.delete(`/field/${idField}`, config);
 
       setFields(fields.filter((field) => field.idField !== idField));
+      setTotalFields(totalFields - 1);
     },
-    [token, fields],
+    [token, fields, totalFields],
   );
 
   const handleNavigateToField = useCallback(
