@@ -58,16 +58,6 @@ const Field: React.FC = () => {
 
   const sendUpdate = useCallback(
     async (data: DataFormProps) => {
-      setField({
-        ...field,
-        name: data.name,
-        logradouro: data.logradouro,
-        number: data.number,
-        complement: data.complement,
-        latitude: data.latitude,
-        longitude: data.longitude,
-      });
-
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
