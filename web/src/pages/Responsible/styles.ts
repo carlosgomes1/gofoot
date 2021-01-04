@@ -96,14 +96,25 @@ export const HeaderContact = styled.div`
   width: 100%;
 
   svg {
+    color: #c53030;
+    cursor: pointer;
+
+    transition: color 0.3s;
+
+    &:hover {
+      color: #7c2525;
+    }
+  }
+
+  svg:first-of-type {
     color: #037e3f;
     cursor: pointer;
 
     transition: color 0.3s;
-  }
 
-  svg:hover {
-    color: #01381b;
+    &:hover {
+      color: #01381b;
+    }
   }
 
   h1 {

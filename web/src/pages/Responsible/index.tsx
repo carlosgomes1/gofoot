@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import { FaWhatsapp, FaPhone, FaPlus } from "react-icons/fa";
-import { FiX } from "react-icons/fi";
+import { FiX, FiTrash2 } from "react-icons/fi";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 
@@ -122,7 +122,27 @@ const Responsible: React.FC = () => {
     setResponsibleToAddContact,
   ] = useState<AddContactData>({} as AddContactData);
 
-  const { field } = useField();
+  const { field, attField } = useField();
+  const { token } = useAuth();
+
+  const handleDeleteResponsible = useCallback(
+    async (idResponsible: string) => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await api.delete(`/responsible/${idResponsible}`, config);
+
+      attField();
+
+      field.responsibles = field.responsibles.filter(
+        (responsible) => responsible.idResponsible !== idResponsible,
+      );
+    },
+    [token, field, attField],
+  );
 
   const handleCloseAddContact = useCallback((): void => {
     setActive(false);
@@ -155,6 +175,13 @@ const Responsible: React.FC = () => {
                           responsible.idResponsible,
                           responsible.name,
                         )
+                      // eslint-disable-next-line react/jsx-curly-newline
+                    }
+                  />
+                  <FiTrash2
+                    size={30}
+                    onClick={
+                      () => handleDeleteResponsible(responsible.idResponsible)
                       // eslint-disable-next-line react/jsx-curly-newline
                     }
                   />
