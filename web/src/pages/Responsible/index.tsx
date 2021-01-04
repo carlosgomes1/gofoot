@@ -1,6 +1,14 @@
 import React from "react";
+import { FaWhatsapp, FaPhone, FaPlus } from "react-icons/fa";
 
-import { Container, Content } from "./styles";
+import {
+  Container,
+  Content,
+  Contacts,
+  ContactItem,
+  ContactContainer,
+  HeaderContact,
+} from "./styles";
 
 import { useField } from "../../hooks/field";
 
@@ -15,9 +23,26 @@ const Responsible: React.FC = () => {
       <Header />
       <Content>
         <Aside selected="responsible" />
-        {field.responsibles.map((responsible) => (
-          <h1 key={responsible.name}>{responsible.name}</h1>
-        ))}
+        <Contacts>
+          {field.responsibles.map((responsible) => (
+            <ContactItem>
+              <HeaderContact>
+                <h1 key={responsible.name}>{responsible.name}</h1>
+                <FaPlus size={30} />
+              </HeaderContact>
+              {responsible.contacts.map((contact) => (
+                <ContactContainer>
+                  {contact.type === "Whatsapp" ? (
+                    <FaWhatsapp color="#4DC95B" size={30} />
+                  ) : (
+                    <FaPhone size={30} />
+                  )}{" "}
+                  - <strong>{contact.value}</strong>
+                </ContactContainer>
+              ))}
+            </ContactItem>
+          ))}
+        </Contacts>
       </Content>
     </Container>
   );

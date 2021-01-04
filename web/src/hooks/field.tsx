@@ -2,10 +2,18 @@ import React, { createContext, useContext, useState, useCallback } from "react";
 
 import api from "../services/api";
 
+interface Contact {
+  idContact: string;
+  type: string;
+  value: string;
+  fkResponsible: string;
+}
+
 interface Responsible {
   idResponsible: string;
   name: string;
   fkField: string;
+  contacts: Contact[];
 }
 
 interface Field {
