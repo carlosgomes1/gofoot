@@ -83,7 +83,7 @@ export const ContactContainer = styled.div`
   }
 
   svg {
-    margin-right: 8px;
+    margin: 0 8px;
   }
 `;
 

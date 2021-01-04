@@ -121,6 +121,7 @@ const Responsible: React.FC = () => {
     responsibleToAddContact,
     setResponsibleToAddContact,
   ] = useState<AddContactData>({} as AddContactData);
+  const [attScreen, setAttScreen] = useState(false);
 
   const { field, attField } = useField();
   const { token } = useAuth();
@@ -142,6 +143,23 @@ const Responsible: React.FC = () => {
       );
     },
     [token, field, attField],
+  );
+
+  const handleDeleteContact = useCallback(
+    async (idContact: string) => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await api.delete(`/contact/${idContact}`, config);
+
+      attField();
+
+      setAttScreen(!attScreen);
+    },
+    [token, attField, attScreen],
   );
 
   const handleCloseAddContact = useCallback((): void => {
@@ -194,6 +212,12 @@ const Responsible: React.FC = () => {
                       <FaPhone size={30} />
                     )}{" "}
                     - <strong>{contact.value}</strong>
+                    <FiX
+                      size={16}
+                      color="#c53030"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDeleteContact(contact.idContact)}
+                    />
                   </ContactContainer>
                 ))}
               </ContactItem>
