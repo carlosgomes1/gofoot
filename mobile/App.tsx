@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   return (
     <Home>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </Home>
   );
 };
