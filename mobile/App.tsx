@@ -11,7 +11,7 @@ import {
   RobotoSlab_700Bold,
 } from "@expo-google-fonts/roboto-slab";
 
-import Home from "./src/screens/Home";
+import Routes from "./src/routes";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -25,9 +25,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <Home>
+    <>
       <StatusBar style="dark" />
-    </Home>
+      <Routes />
+    </>
   );
 };
 

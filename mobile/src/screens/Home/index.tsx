@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Svg, { Path } from "react-native-svg";
 import { Feather } from "@expo/vector-icons";
 
@@ -15,6 +16,12 @@ import {
 } from "./styles";
 
 const Home: React.FC = () => {
+  const navigation = useNavigation();
+
+  const handleNavigateToFields = useCallback(() => {
+    navigation.navigate("Fields");
+  }, [navigation]);
+
   return (
     <Container>
       <View style={{ backgroundColor: "#037e3f", height: 160 }}>
@@ -37,7 +44,7 @@ const Home: React.FC = () => {
           Encontre quadras e campos de futebol próximos a você de forma fácil e
           rápida.
         </Title>
-        <Button>
+        <Button onPress={handleNavigateToFields}>
           <ButtonText>Abrir mapa</ButtonText>
           <Feather
             name="arrow-right"
