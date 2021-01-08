@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Text, Image } from "react-native";
+import { Image, Animated, Easing } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   requestPermissionsAsync,
@@ -15,8 +15,10 @@ import {
   HeaderText,
   MarkerContainer,
   MarkerText,
+  LoadingContainer,
 } from "./styles";
 import BolaPNG from "../../assets/images/bola-de-futebol.png";
+import Bola2PNG from "../../assets/images/bola-de-futebol2.png";
 
 import api from "../../services/api";
 
@@ -95,6 +97,21 @@ const Fields: React.FC = () => {
     getFields();
   }, []);
 
+  const rotateValueHolder = new Animated.Value(0);
+
+  Animated.loop(
+    Animated.timing(rotateValueHolder, {
+      toValue: 1,
+      duration: 3000,
+      easing: Easing.linear, // Easing is an additional import from react-native
+      useNativeDriver: true, // To make use of native driver for performance
+    }),
+  ).start();
+  const rotateData = rotateValueHolder.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
   return (
     <Container>
       <Header>
@@ -128,7 +145,12 @@ const Fields: React.FC = () => {
           ))}
         </Map>
       ) : (
-        <Text>Carregando mapa...</Text>
+        <LoadingContainer>
+          <Animated.Image
+            source={Bola2PNG}
+            style={{ transform: [{ rotate: rotateData }] }}
+          />
+        </LoadingContainer>
       )}
     </Container>
   );

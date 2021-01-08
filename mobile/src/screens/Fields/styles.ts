@@ -1,5 +1,16 @@
 import styled from "styled-components/native";
+import { keyframes } from "styled-components";
 import MapView from "react-native-maps";
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -44,4 +55,10 @@ export const MarkerText = styled.Text`
   font-family: "RobotoSlab_700Bold";
   font-size: 12px;
   color: #01381b;
+`;
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 `;
