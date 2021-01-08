@@ -1,10 +1,16 @@
-![Logo of the project](https://github.com/carlosgomes1/gofoot/blob/master/web/src/assets/images/logo.png)
+<div align="center" style="margin-bottom: 20px;">
+<img alt="gobarber" src="https://github.com/carlosgomes1/gofoot/blob/master/web/src/assets/images/logo.png" width="auto" heigth="auto"/>
+</div>
 
-<img src="https://img.shields.io/static/v1?label=license&message=MIT&color=blue&style=for-the-badge"/>
-<img src="https://img.shields.io/static/v1?label=last%20commit&message=january%2021&color=blue&style=for-the-badge"/>
-<img src="https://img.shields.io/static/v1?label=typescript&message=98.6%&color=blue&style=for-the-badge"/>
+<div align="center" style="margin: 20px;">
  
-## :gem: O projeto
+[![The MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](http://github.com/carlosgomes1/gofoot/LICENSE.md)
+![GitHub last commit](https://img.shields.io/github/last-commit/carlosgomes1/gofoot?color=green&style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/carlosgomes1/gofoot?style=flat-square)
+
+</div>
+ 
+## :soccer: O projeto
  
 Application to connect owners of soccer fields / courts in a simple and fast way, where an owner can register, register their courts and their respective responsible / contacts and the user view these blocks listed on a map on his mobile phone.
  
@@ -13,67 +19,99 @@ Application to connect owners of soccer fields / courts in a simple and fast way
  
 Here are the technologies used in this project:
  
-* <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>
-* <a href="https://reactjs.org/" target="_blank">ReactJS</a>
-* <a href="https://reactnative.dev/" target="_blank">React Native</a>
-* <a href="http://expressjs.com/" target="_blank">ExpressJS</a>
-* <a href="https://expo.io/" target="_blank">Expo</a>
-* <a href="https://jwt.io/" target="_blank">JWT</a>
-* <a href="https://github.com/jquense/yup#:~:text=Yup%20is%20a%20JavaScript%20schema%20builder%20for%20value,allow%20modeling%20complex%2C%20interdependent%20validations%2C%20or%20value%20transformations." target="_blank">Yup</a>
-* <a href="https://styled-components.com/" target="_blank">Styled Components</a>
-* <a href="https://typeorm.io/#/" target="_blank">TypeORM</a>
-* <a href="https://www.postgresql.org/" target="_blank">Postgres</a>
-* <a href="https://www.docker.com/" target="_blank">Docker</a>
-* <a href="https://leafletjs.com/" target="_blank">Leaflet</a>
-* <a href="https://github.com/axios/axios" target="_blank">Axios</a>
+- [NodeJS](https://nodejs.org/en/)
+- [ReactJS](https://reactjs.org/)
+- [React Native](https://reactnative.dev/)
+- [ExpressJS](http://expressjs.com/)
+- [Expo](https://expo.io/)
+- [JWT](https://jwt.io/)
+- [Yup](https://github.com/jquense/yup#:~:text=Yup%20is%20a%20JavaScript%20schema%20builder%20for%20value,allow%20modeling%20complex%2C%20interdependent%20validations%2C%20or%20value%20transformations.)
+- [Styled Components](https://styled-components.com/)
+- [TypeORM](https://typeorm.io/#/)
+- [Postgres](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
+- [Leaflet](https://leafletjs.com/)
+- [Axios](https://github.com/axios/axios)
 
+## :thinking: How to contribute?
+**Fork this repository**
+
+```bash
+# Clone your fork
+$ git clone url-of-your-fork && cd gofoot
+
+# Create a branch with your feature or bug fix
+$ git checkout -b my-branch
+
+# Commit your changes
+$ git commit -m 'feature/bugfix: my amendments'
+
+# Push to your branch
+$ git push origin my-branch
+```
+
+After the merge of your pull request is done, you can delete your branch.
  
-## Services Used
+## :fire: Getting started
  
-* Github
-* ...
- 
- 
-## Ruby Gems
-...
- 
-## Getting started
- 
-* To install gems:
->    $ bundle install
-* To create the bank and do as migrations:
->    $ rake db:create db:migrate db:seed
-* To run the project:
->    $ rails s
- 
-## How to use
- 
-Here will be the images and descriptions. Principal content.
- 
- 
-## Features
- 
-  - Here will be the features.
- 
- 
-## Links
- 
-  - Link of deployed application: (if has been deployed)
-  - Repository: https://link_of_repository
-    - In case of sensitive bugs like security vulnerabilities, please contact
-      YOUR EMAIL directly instead of using issue tracker. We value your effort
-      to improve the security and privacy of this project!
- 
+#### Cloning project
+```sh
+$ git clone https://github.com/carlosgomes1/gofoot.git
+$ cd gofoot
+```
+
+#### Preparing the backend
+```sh
+$ cd backend
+$ npm i
+$ code .
+
+# Create a file called ".env" at the root of the project and place the following information:
+AUTH_SECRET=YOUR_RANDOM_SECRET
+SERVER_PORT=3333
+
+# Open the ormconfigtemplate.json file and change its name to ormconfig.json and exchange the information for your docker postgres image.
+
+$ npm run dev:server
+```
+
+#### Web app
+```sh
+# Open a new terminal tab
+
+$ cd web
+$ npm i
+$ yarn start
+```
+
+#### Mobile app
+```sh
+$ cd mobile
+
+# Install the expo-cli
+$ npm install -g expo-cli
+$ npm i
+$ expo start
+
+# Install the EXPO app on your mobile phone and scan the QRcode
+```
  
 ## Versioning
  
 1.0.0.0
  
  
-## Authors
- 
-* **YOUR NAME**: @YOUR_GITHUB_NICKNAME (https://github.com/YOUR_GITHUB_NICKNAME)
- 
- 
-Please follow github and join us!
-Thanks to visiting me and good coding!
+### Author
+---
+<div align="center">
+<a href="https://github.com/carlosgomes1">
+ <img style="border-radius: 50%;" src="https://avatars3.githubusercontent.com/u/48812516?s=460&u=6d479ef73b7e12218fde677f0bebedacba995a33&v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>Carlos Gomes</b></sub></a> <a href="https://github.com/carlosgomes1" title="Carlos">🚀</a>
+
+
+Feito com ❤️ por Carlos Gomes 👋🏽 Entre em contato!
+
+[![Linkedin Badge](https://img.shields.io/badge/-Carlos-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/carlosgomes11/)](https://www.linkedin.com/in/carlosgomes11/) 
+[![Gmail Badge](https://img.shields.io/badge/-carlos_gomes.s@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:carlos_gomes.s@hotmail.com)](mailto:carlos_gomes.s@hotmail.com)
+</div>
