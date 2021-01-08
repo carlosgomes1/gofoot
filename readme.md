@@ -14,6 +14,16 @@
  
 Application to connect owners of soccer fields / courts in a simple and fast way, where an owner can register, register their courts and their respective responsible / contacts and the user view these blocks listed on a map on his mobile phone.
  
+## :camera: Previous on mockup
+
+#### Mobile:
+
+<img src="https://github.com/carlosgomes1/gofoot/blob/master/git/mockup.png" width="100%">
+
+#### Web:
+
+<img src="https://github.com/carlosgomes1/gofoot/blob/master/git/mockup2.png" width="100%">
+
  
 ## :rocket: Technologies used 
  
