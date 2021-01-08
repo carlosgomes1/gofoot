@@ -1,16 +1,5 @@
 import styled from "styled-components/native";
-import { keyframes } from "styled-components";
 import MapView from "react-native-maps";
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
 
 export const Container = styled.SafeAreaView`
   flex: 1;
