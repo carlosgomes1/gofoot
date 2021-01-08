@@ -10,7 +10,7 @@
 
 </div>
  
-## :soccer: O projeto
+## :soccer: The project
  
 Application to connect owners of soccer fields / courts in a simple and fast way, where an owner can register, register their courts and their respective responsible / contacts and the user view these blocks listed on a map on his mobile phone.
  
@@ -98,7 +98,7 @@ $ expo start
  
 ## Versioning
  
-1.0.0.0
+:computer: 1.0.0.0
  
  
 ### Author
@@ -110,7 +110,7 @@ $ expo start
  <sub><b>Carlos Gomes</b></sub></a> <a href="https://github.com/carlosgomes1" title="Carlos">🚀</a>
 
 
-Feito com ❤️ por Carlos Gomes 👋🏽 Entre em contato!
+Done with ❤️ by Carlos Gomes 👋🏽 Please contact!
 
 [![Linkedin Badge](https://img.shields.io/badge/-Carlos-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/carlosgomes11/)](https://www.linkedin.com/in/carlosgomes11/) 
 [![Gmail Badge](https://img.shields.io/badge/-carlos_gomes.s@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:carlos_gomes.s@hotmail.com)](mailto:carlos_gomes.s@hotmail.com)
