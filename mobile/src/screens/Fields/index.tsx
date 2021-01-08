@@ -1,13 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { Text, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
 import { Feather } from "@expo/vector-icons";
+import { Marker } from "react-native-maps";
 
-import { Container, Map, Header, HeaderText } from "./styles";
+import {
+  Container,
+  Map,
+  Header,
+  HeaderText,
+  MarkerContainer,
+  MarkerText,
+} from "./styles";
+import BolaPNG from "../../assets/images/bola-de-futebol.png";
+
+import api from "../../services/api";
 
 interface CurrentRegionProps {
   latitude: number;
@@ -16,13 +27,38 @@ interface CurrentRegionProps {
   longitudeDelta: number;
 }
 
+interface FieldData {
+  complement?: string;
+  fkOwner: string;
+  idField: string;
+  latitude: number;
+  longitude: number;
+  logradouro: string;
+  name: string;
+  number: string;
+}
+
+interface ResponseFieldsData {
+  fields: FieldData[];
+}
+
 const Fields: React.FC = () => {
+  const [fields, setFields] = useState<FieldData[]>([]);
   const [coordsGetted, setCoordsGetted] = useState(false);
   const [currentRegion, setCurrentRegion] = useState<CurrentRegionProps>(
     null || ({} as CurrentRegionProps),
   );
 
   const navigation = useNavigation();
+
+  const handleNavigateToDetail = useCallback(
+    (idField: string) => {
+      navigation.navigate("Detail", {
+        idField,
+      });
+    },
+    [navigation],
+  );
 
   useEffect(() => {
     async function loadInitialPosition(): Promise<void> {
@@ -49,6 +85,16 @@ const Fields: React.FC = () => {
     loadInitialPosition();
   }, [navigation, currentRegion]);
 
+  async function getFields(): Promise<void> {
+    await api.get<ResponseFieldsData>("/field").then((response) => {
+      setFields(response.data.fields);
+    });
+  }
+
+  useEffect(() => {
+    getFields();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -64,7 +110,23 @@ const Fields: React.FC = () => {
       </Header>
 
       {coordsGetted ? (
-        <Map initialRegion={currentRegion} />
+        <Map initialRegion={currentRegion}>
+          {fields.map((field) => (
+            <Marker
+              key={field.idField}
+              coordinate={{
+                latitude: field.latitude,
+                longitude: field.longitude,
+              }}
+              onPress={() => handleNavigateToDetail(field.idField)}
+            >
+              <MarkerContainer>
+                <Image source={BolaPNG} />
+                <MarkerText>{field.name}</MarkerText>
+              </MarkerContainer>
+            </Marker>
+          ))}
+        </Map>
       ) : (
         <Text>Carregando mapa...</Text>
       )}

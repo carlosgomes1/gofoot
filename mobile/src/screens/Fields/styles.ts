@@ -29,3 +29,19 @@ export const HeaderText = styled.Text`
   font-size: 20px;
   color: #01381b;
 `;
+
+export const MarkerContainer = styled.View`
+  align-items: center;
+
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 8px;
+
+  border: 1px solid #037e3f;
+`;
+
+export const MarkerText = styled.Text`
+  font-family: "RobotoSlab_700Bold";
+  font-size: 12px;
+  color: #01381b;
+`;
